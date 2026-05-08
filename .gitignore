@@ -1,15 +1,5 @@
-# 忽略所有文件
-/*
-
-# 保留.gitignore
-!.gitignore
-
-# 但保留简历优化器文件夹
-!/.trae/
-/.trae/*
-!/.trae/skills/
-/.trae/skills/*
-!/.trae/skills/resume-optimizer/
+# 只忽略 resume.txt 文件，其他全部上传
+resume.txt
 
 # 常见需要忽略的文件
 __pycache__/

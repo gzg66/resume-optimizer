@@ -1,25 +1,74 @@
 """
 简历优化技能 - 直接使用LLM进行简历优化
+固定读取 resume.txt 文件中的实习经历和项目经历
 """
 import json
+import os
 from typing import Dict, Any
 
 
-def optimize_resume_with_llm(resume_data: Dict[str, Any], jd_text: str) -> Dict[str, Any]:
+def get_resume_txt_path() -> str:
     """
-    使用LLM优化简历
+    获取 resume.txt 文件的绝对路径
+    """
+    skill_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(os.path.dirname(skill_dir))
+    return os.path.join(project_root, "resume.txt")
+
+
+def load_resume_txt() -> str:
+    """
+    读取 resume.txt 文件中的经历内容
+    """
+    try:
+        resume_txt_path = get_resume_txt_path()
+        with open(resume_txt_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
+
+
+def build_complete_resume(basic_info: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    构建完整简历，将 resume.txt 的经历整合进去
+    """
+    if basic_info is None:
+        basic_info = {
+            "姓名": "",
+            "联系方式": {
+                "邮箱": "",
+                "电话": ""
+            },
+            "个人介绍": "",
+            "技能": []
+        }
+    
+    resume_txt_content = load_resume_txt()
+    
+    # 将 resume.txt 的内容作为经历的详细描述
+    complete_resume = basic_info.copy()
+    complete_resume["原始经历库"] = resume_txt_content
+    
+    return complete_resume
+
+
+def optimize_resume_with_llm(jd_text: str, basic_info: Dict[str, Any] = None) -> Dict[str, Any]:
+    """
+    使用LLM优化简历，自动从 resume.txt 读取经历
     
     Args:
-        resume_data: 原始简历数据（JSON格式）
         jd_text: 岗位JD文字
+        basic_info: 可选的基本信息（姓名、联系方式等）
         
     Returns:
-        优化后的简历
+        优化提示词
     """
+    resume_txt_content = load_resume_txt()
+    
     system_prompt = """你是一位专业的简历优化专家，擅长根据岗位JD优化简历。你的任务是：
 
 1. 深度理解岗位JD的核心要求
-2. 从用户提供的简历中筛选与岗位JD最匹配的经历
+2. 从用户提供的"原始经历库"中筛选与岗位JD最匹配的经历
 3. 优化技能列表，突出与JD匹配的技能
 4. 优化个人介绍，使其更贴合岗位要求
 5. 输出一份专业、与JD高度匹配的简历
@@ -31,22 +80,26 @@ def optimize_resume_with_llm(resume_data: Dict[str, Any], jd_text: str) -> Dict[
 【岗位JD】
 {jd_text}
 
-【原始简历】
-{json.dumps(resume_data, ensure_ascii=False, indent=2)}
+【原始经历库（从 resume.txt 读取）】
+{resume_txt_content}
+
+【基本信息】
+{json.dumps(basic_info if basic_info else {}, ensure_ascii=False, indent=2)}
 
 请完成以下优化：
-1. 筛选与JD最匹配的3-5条工作/实习经历
-2. 筛选与JD最匹配的2-3个项目经历
-3. 优化技能列表，优先展示与JD匹配的技能（保留10-15个）
+1. 从"原始经历库"中筛选与JD最匹配的实习/工作经历（整合为3-5条）
+2. 从"原始经历库"中筛选与JD最匹配的项目经历（整合为2-3个）
+3. 根据经历内容，提取并优化技能列表（保留10-15个，优先展示与JD匹配的技能）
 4. 优化个人介绍，突出与JD匹配的能力和经验
 5. 为每条经历添加匹配度分析
 
-请以JSON格式输出，保持与原始简历相同的结构，并在根节点添加"匹配分析"字段说明优化思路。重要：所有字段名(key)请使用中文！"""
+请以JSON格式输出，包含以下字段："姓名"、"联系方式"、"个人介绍"、"技能"、"工作经历"、"项目经历"、"匹配分析"。重要：所有字段名(key)请使用中文！"""
 
     return {
         "系统提示词": system_prompt,
         "用户提示词": user_prompt,
-        "状态": "准备就绪"
+        "状态": "准备就绪",
+        "说明": "已从 resume.txt 读取经历内容"
     }
 
 
