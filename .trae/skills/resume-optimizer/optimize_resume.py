@@ -13,7 +13,7 @@ SYSTEM_PROMPT = """你是一位专业的简历优化专家，擅长根据岗位J
 4. 优化个人介绍，使其更贴合岗位要求
 5. 输出一份专业、与JD高度匹配的简历
 
-请以JSON格式输出优化后的简历，保持原有的数据结构。"""
+请以JSON格式输出优化后的简历，保持原有的数据结构。重要：所有字段名(key)请使用中文！"""
 
 
 class ResumeOptimizer:
@@ -37,7 +37,7 @@ class ResumeOptimizer:
 4. 优化个人介绍，突出与JD匹配的能力和经验
 5. 为每条经历添加匹配度分析
 
-请以JSON格式输出，保持与原始简历相同的结构，并在根节点添加match_analysis字段说明优化思路。"""
+请以JSON格式输出，保持与原始简历相同的结构，并在根节点添加"匹配分析"字段说明优化思路。重要：所有字段名(key)请使用中文！"""
         return prompt
 
     def optimize_resume(self, resume_data: Dict, jd_text: str) -> Dict:
@@ -46,8 +46,8 @@ class ResumeOptimizer:
         print("📋 简历优化任务")
         print("=" * 60)
         print(f"\n岗位JD长度: {len(jd_text)} 字符")
-        print(f"简历包含 {len(resume_data.get('experiences', []))} 条经历")
-        print(f"简历包含 {len(resume_data.get('skills', []))} 项技能")
+        print(f"简历包含 {len(resume_data.get('工作经历', []))} 条经历")
+        print(f"简历包含 {len(resume_data.get('技能', []))} 项技能")
         print("\n" + "=" * 60)
         print("🤖 请使用以下提示词调用LLM进行优化：")
         print("=" * 60)
@@ -64,10 +64,10 @@ class ResumeOptimizer:
         print("=" * 60)
         
         return {
-            "status": "pending",
-            "message": "请使用上述提示词调用LLM进行优化",
-            "system_prompt": SYSTEM_PROMPT,
-            "user_prompt": prompt
+            "状态": "待处理",
+            "消息": "请使用上述提示词调用LLM进行优化",
+            "系统提示词": SYSTEM_PROMPT,
+            "用户提示词": prompt
         }
 
 
@@ -86,33 +86,33 @@ def save_resume(resume: Dict, file_path: str):
 def create_sample_resume():
     """创建示例简历"""
     sample = {
-        "name": "张三",
-        "contact": {
-            "email": "zhangsan@example.com",
-            "phone": "138-0000-0000"
+        "姓名": "张三",
+        "联系方式": {
+            "邮箱": "zhangsan@example.com",
+            "电话": "138-0000-0000"
         },
-        "introduction": "热爱技术，具有3年软件开发经验，善于团队协作。",
-        "skills": ["Python", "Java", "JavaScript", "MySQL", "Git", "Linux"],
-        "experiences": [
+        "个人介绍": "热爱技术，具有3年软件开发经验，善于团队协作。",
+        "技能": ["Python", "Java", "JavaScript", "MySQL", "Git", "Linux"],
+        "工作经历": [
             {
-                "company": "ABC科技有限公司",
-                "position": "高级开发工程师",
-                "period": "2022.01 - 至今",
-                "description": "负责后端服务开发，使用Python和Django框架。",
-                "achievements": "优化系统性能，提升响应速度50%"
+                "公司": "ABC科技有限公司",
+                "职位": "高级开发工程师",
+                "时间": "2022.01 - 至今",
+                "描述": "负责后端服务开发，使用Python和Django框架。",
+                "成就": "优化系统性能，提升响应速度50%"
             },
             {
-                "company": "XYZ互联网公司",
-                "position": "前端开发工程师",
-                "period": "2020.06 - 2021.12",
-                "description": "使用React开发Web应用，负责用户界面设计。",
-                "achievements": "参与项目获得公司优秀项目奖"
+                "公司": "XYZ互联网公司",
+                "职位": "前端开发工程师",
+                "时间": "2020.06 - 2021.12",
+                "描述": "使用React开发Web应用，负责用户界面设计。",
+                "成就": "参与项目获得公司优秀项目奖"
             }
         ],
-        "projects": [
+        "项目经历": [
             {
-                "name": "电商平台",
-                "description": "使用React和Node.js开发的全栈电商项目"
+                "项目名称": "电商平台",
+                "项目描述": "使用React和Node.js开发的全栈电商项目"
             }
         ]
     }
