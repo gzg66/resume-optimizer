@@ -1,0 +1,37 @@
+# 忽略所有文件
+/*
+
+# 保留.gitignore
+!.gitignore
+
+# 但保留简历优化器文件夹
+!/.trae/
+/.trae/*
+!/.trae/skills/
+/.trae/skills/*
+!/.trae/skills/resume-optimizer/
+
+# 常见需要忽略的文件
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg

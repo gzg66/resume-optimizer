@@ -1,0 +1,63 @@
+{
+  "name": "张三",
+  "contact": {
+    "email": "zhangsan@example.com",
+    "phone": "138-0000-0000"
+  },
+  "introduction": "热爱技术，具有3年软件开发经验，善于团队协作，具备良好的问题解决能力。",
+  "skills": [
+    "Python",
+    "Java",
+    "JavaScript",
+    "TypeScript",
+    "React",
+    "Vue",
+    "Node.js",
+    "Django",
+    "Flask",
+    "MySQL",
+    "PostgreSQL",
+    "MongoDB",
+    "Redis",
+    "Docker",
+    "Git",
+    "Linux"
+  ],
+  "experiences": [
+    {
+      "company": "ABC科技有限公司",
+      "position": "高级Python开发工程师",
+      "period": "2022.01 - 至今",
+      "description": "负责后端服务架构设计与开发，使用Python、Django和Flask框架构建高性能Web应用。参与微服务架构设计，负责核心模块开发。",
+      "achievements": "优化系统性能，提升API响应速度50%；主导数据库优化，查询效率提升3倍；获得公司年度优秀员工称号。"
+    },
+    {
+      "company": "XYZ互联网公司",
+      "position": "全栈开发工程师",
+      "period": "2020.06 - 2021.12",
+      "description": "使用React和Node.js开发企业级Web应用，负责前端界面设计和后端API开发。",
+      "achievements": "独立完成3个核心功能模块开发；参与项目获得公司季度优秀项目奖。"
+    },
+    {
+      "company": "DEF软件公司",
+      "position": "前端开发实习生",
+      "period": "2019.07 - 2019.12",
+      "description": "学习Web前端开发，使用Vue.js开发小型应用。",
+      "achievements": "完成实习期间所有任务，获得导师好评。"
+    }
+  ],
+  "projects": [
+    {
+      "name": "电商平台后端系统",
+      "description": "使用Python和Django开发的电商平台后端，支持高并发访问，包含用户管理、商品管理、订单系统等模块。"
+    },
+    {
+      "name": "实时数据可视化平台",
+      "description": "使用React和Node.js构建的实时数据可视化平台，支持多种图表展示。"
+    },
+    {
+      "name": "自动化测试工具",
+      "description": "使用Python开发的自动化测试工具，提升测试效率80%。"
+    }
+  ]
+}
